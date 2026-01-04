@@ -39,7 +39,7 @@ def get_elevenlabs_api_key():
     print("Will read api key from environment variable .env file whose location is C:/Users/vineet.srivastava/venvGenAIStudy/.env .\n\n")    
     
     # Ask user if they want to proceed with environment variable
-    user_input = input("Do you want to proceed with reading API key from .env file? (Y/N): ").strip()
+    user_input = input("Do you want to proceed with reading API key from existing .env file? (Y/N): ").strip()
     if user_input.lower() != 'y':
         print("❌ Exiting. Please provide API key as command-line argument or set it in .env file in the path mentioned.")
         sys.exit(0)
@@ -153,7 +153,17 @@ def create_hinglish_prompt(topic, context):
         Formatted prompt string
     """
     prompt = f"""
-    Write a high-energy, 2-minute "Radio Duo" conversation in Hinglish between two hosts, 'Vineet' (energetic) and 'Simran' (curious) about: {topic}.
+    Write a high-energy, strictly 2-minute "Radio Duo" conversation in Hinglish between two hosts, 'Vineet' (energetic) and 'Simran' (curious) about: {topic}.
+
+    STRICT DURATION CONSTRAINS (MANDATORY):
+    1. TOTAL LINE COUNT: You must generate exactly 14 lines of dialogue with 7 lines for each host.
+    2. TOTAL WORD COUNT: The entire script must be between 300 and 400 words total.
+    
+    HINDI GRAMMAR CONSTRAINTS:
+    - ERGATIVE CASE: When referring to past actions by a person, use "unhone" instead of "unki" or "unne". 
+      (Example: "Unhone match jeeta" NOT "Unki match jeeta").
+    - POSSESSIVE VS AGENT: Use "unki" ONLY for possession (e.g., "unki team"). Use "unhone" for actions (e.g., "unhone kaha").
+    - Avoid "textbook" Hindi; use "Urban Hinglish" grammar where 'Unhone' is the standard for 'They did/He did'.
 
     CRITICAL INSTRUCTIONS FOR NATURAL SOUND:
     1. PHONETIC SPELLING: Write Hindi words exactly how they sound to an English speaker. 
@@ -172,7 +182,6 @@ def create_hinglish_prompt(topic, context):
     11. Should not have any Radio station name in conversation.
     12. End each statement of host with split marker "\n\n" only.
     13. 2017 should sound as two thousand seventeen and not two thousand and seventeen.
-    14. Conversation should be 2 minutes long strictly.
     
     STRICT FORMAT:
     Vineet: [text]
@@ -180,16 +189,18 @@ def create_hinglish_prompt(topic, context):
 
     ### EXAMPLE (ONE-SHOT) ###
     Topic: Rain in Mumbai
-    Vineet: [pause] Swagat hai doston! Vineet here... aaj Mumbai ki baarish ke baare main baat karate hain. Rains have finallyarrived, hai na? [laughs]
+    Vineet: [pause] Swagat hai doston! aaj Mumbai ki baarish ke baare main baat karenge ham log. Rains have finallyarrived, hai na? [laughs]
     Simran: Oh my god, Literally... it's so beautiful but my hair is like... pura mess ho gaya hai, you know?
-    Vineet: Arre Simran, baalon ko chhodo na! Just look at the cutting chai and vada pav weather... bindaas enjoy karo!
+    Vineet: Arre, baalon ko chhodo na! Just look at the cutting chai and vada pav weather... bindaas enjoy karo!
     Simran: I mean... [pause] true. It is a total vibe. Par ye traffic... hmmm... it's going to be insane, right?
-    Vineet: Wo toh hai... par Mumbai ki baarish is emotion, Simran. Bilkul tension mat lo... bill-kul chill maaro!
+    Vineet: Wo toh hai... par Mumbai ki baarish is emotion, Simran. Bilkul tension mat lo... bill-kul chill maaro and ejoy the rains!
+    Vineet: ...aur jab Virat crease par aaye, toh unhone [pause] pura game hi badal diya! (NOT unki game badal diya).
     
     ### YOUR TASK ###
-    Now, generate a similar 2-minute conversation about the topic: {topic}
+    Now, generate a similar natural sounding 2-minute conversation about the topic: {topic}
     Using this context: {context}
-    Output irectly from script without any other text.
+    Output directly from script without any other text.
+    End the conversation with a natural sounding goodbye by Vineet.
     """
     return prompt
 
