@@ -46,7 +46,7 @@ def get_elevenlabs_api_key():
     
     # Fall back to environment variable
     # Load environment variables
-    load_dotenv("C:/Users/vineet.srivastava/venvGenAIStudy/.env")
+    load_dotenv("C:/LEARNING/GEN-AI/LANGCHAIN/.env")
     api_key = os.getenv("ELLEVENLABS_API_KEY")
     if api_key:
         print("✅ Using ElevenLabs API key from environment variable")
@@ -590,7 +590,7 @@ def generate_podcast(dialogue, api_key, male_voice_id, female_voice_id,
         audio_bytes = generate_segment(text, api_key, voice_id)
         
         if audio_bytes:
-            temp_filename = f"C:/LEARNING/LANGCHAIN/temp_segment_{idx:03d}.mp3"
+            temp_filename = f"C:/LEARNING/GEN-AI/LANGCHAIN/temp_segment_{idx:03d}.mp3"
             try:
                 # Ensure temp directory exists
                 temp_dir = os.path.dirname(temp_filename)
@@ -654,7 +654,7 @@ def main():
     # Get output file path from command-line argument or use default
     output_file = get_output_file_path()
     if not output_file:
-        output_file = "C:/LEARNING/LANGCHAIN/ollama_podcast.mp3"
+        output_file = "C:/LEARNING/GEN-AI/LANGCHAIN/ollama_podcast.mp3"
         print(f"\n⚠️ No output file path provided. Using default: {output_file}")
         print()
     
